@@ -5,7 +5,7 @@ Example :
 
 ```mongodb+srv://yhaimouch:<password>@cluster0.faubwhg.mongodb.net/mernproject?retryWrites=true&w=majority```
 
-### 2. Create ```.env`` file:
+### 2. Create ```.env``` file:
 
 Inside the file add your mongoDB password to don't push it in github.
 ```MONGODB_PASSWORD=your_password_should_be_here```
