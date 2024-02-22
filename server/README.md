@@ -1,58 +1,34 @@
-# (STEP 1) Setup Express Server
+# (STEP 2) Connect MongoDB
 
-## Overview
+### 1. Get MongoDB Link And Password from your MongoDB account:
+Example :
 
-This repository contains a simple setup for creating an Express server with MongoDB using Mongoose, along with Nodemon for automatic server restarts during development.
+```mongodb+srv://yhaimouch:<password>@cluster0.faubwhg.mongodb.net/mernproject?retryWrites=true&w=majority```
 
-## Setup Instructions
+### 2. Create ```.env`` file:
 
-### 1. Install Dependencies:
-Navigate to the project directory and install the necessary dependencies using ```npm``` :
-```npm init -y```
+Inside the file add your mongoDB password to don't push it in github.
+```MONGODB_PASSWORD=your_password_should_be_here```
 
-```npm install express mongoose nodemon```
-
-### 2. Create server.js File :
-
-Create a file named ```server.js``` in your project directory.
-
-### 3. Write Server Setup Code :
-
-In ```server.js```, add the following code to set up the Express server:
+### 3. Update your code like this :
 
 ```
-const express = require('express');
+const express = require("express");
 const app = express();
 const port = 3002;
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-app.get("/", (req, res) => {
-  res.send("Hello World!!");
-});
-
-app.listen(port, () => {
-  console.log(`http://localhost:${port}`);
-});
-```
-
-### 4. Update package.json:
-
-Inside your ```package.json``` file, add the following scripts under the ```"scripts"``` section:
-
-```
-"scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "start": "nodemon server.js"
-}
-```
-
-This allows you to start the server using ```npm start```.
-
-### 5. Create .gitignore File:
-Create a ```.gitignore``` file in your project directory to exclude certain files from version control. Add the following lines to ignore node_modules and .env files:
-
-```
-node_modules
-.env
+mongoose
+  .connect(
+    `mongodb+srv://yhaimouch:${process.env.MONGODB_PASSWORD}@cluster0.faubwhg.mongodb.net/all-data?retryWrites=true&w=majority`
+  )
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`http://localhost:${port}`);
+    });
+  })
+  .catch((err) => console.log(err));
 ```
 
 ### Starting the Server
