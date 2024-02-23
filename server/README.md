@@ -1,27 +1,58 @@
-# (STEP 2) Connect MongoDB
+# (STEP 3) Create Models
 
-### 1. Get MongoDB Link And Password from your MongoDB account:
-Example :
+### 1. Create new folder Named ```models```:
+Inside the folder create new file named ```Users.js```.
 
-```mongodb+srv://yhaimouch:<password>@cluster0.faubwhg.mongodb.net/mernproject?retryWrites=true&w=majority```
-
-### 2. Create ```.env``` file:
-
-Inside the file add your mongoDB password to don't push it in github.
-```MONGODB_PASSWORD=your_password_should_be_here```
-
-### 3. Update your code like this :
+### 2. In ```.Users.js``` file:
+Create your User Schema by adding this code :
 
 ```
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+// define the Schema (the structure of the article)
+const UserSchema = new Schema({
+  name: String,
+  age: Number,
+  email: String
+});
+
+// Create a model based on that schema
+const UserModel = mongoose.model("user", UserSchema);
+
+// export the model
+module.exports = UserModel;
+```
+
+### 3. Update ```server.js``` file with :
+
+```
+// Create the server
 const express = require("express");
 const app = express();
 const port = 3002;
+
+// Import Mongoose
 const mongoose = require("mongoose");
-require("dotenv").config();
+
+// Import dotenv to use MONGODB_PASSWORD
+require('dotenv').config()
+
+// Import UserModel
+const UserModel = require('./models/Users');
+
+// Add GET Method to server
+app.get('/', async(req, res) => {
+  
+  // Get users from mongodb
+  const users = await UserModel.find()
+  // Send response from server to "/"
+  res.json(users)
+})
 
 mongoose
   .connect(
-    `mongodb+srv://yhaimouch:${process.env.MONGODB_PASSWORD}@cluster0.faubwhg.mongodb.net/all-data?retryWrites=true&w=majority`
+    `mongodb+srv://yhaimouch:${process.env.MONGODB_PASSWORD}@cluster0.gjkv6k4.mongodb.net/mernproject?retryWrites=true&w=majority`
   )
   .then(() => {
     app.listen(port, () => {
