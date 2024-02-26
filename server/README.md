@@ -7,6 +7,9 @@ Example :
 
 ### 2. Create ```.env``` file:
 
+Install dotenv packege with this : 
+```npm i dotenv```
+
 Inside the file add your mongoDB password to don't push it in github.
 ```MONGODB_PASSWORD=your_password_should_be_here```
 
